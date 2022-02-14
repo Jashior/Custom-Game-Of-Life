@@ -1,43 +1,61 @@
 <div>
-  <h1>Controls</h1>
+  <h1>Game of Life</h1>
 </div>
 
 <div class="rules">
-  <h3>Ruleset</h3>
-  <ul>
+  <ul class="rules-list">
     <li>
       Any live cell with fewer than
-      <input type="number" [value]="rules.underpopulation_threshold" />
+      <input
+        type="number"
+        id="underpopulation_threshold"
+        [(ngModel)]="rules.underpopulation_threshold"
+        min="0"
+        max="8"
+      />
       live neighbours dies (Underpopulation)
     </li>
 
     <li>
-      Any live cell with more than <b>3</b> live neighbours dies
-      (Overpopulation)
+      Any live cell with more than
+      <input
+        type="number"
+        id="onderpopulation_threshold"
+        [(ngModel)]="rules.overpopulation_threshold"
+        min="0"
+        max="8"
+      />
+      live neighbours dies (Overpopulation)
     </li>
 
     <li>
-      Any live cell with between <b>2</b> and <b>3</b> live neighbours inclusive
-      lives on (Persists)
+      Any live cell with between {{ rules.underpopulation_threshold }} and
+      {{ rules.overpopulation_threshold }} live neighbours inclusive lives on
+      (Persists)
     </li>
 
     <li>
-      Any dead cell with <b>3</b> live neighbours becomes a live cell
-      (Reproduction)
+      Any dead cell with
+      <input
+        type="number"
+        id="life_exact"
+        [(ngModel)]="rules.life_exact"
+        min="0"
+        max="8"
+      />
+      live neighbours becomes a live cell (Reproduction)
     </li>
   </ul>
+</div>
 
+<div class="controls">
   <button (click)="resetRules()">Reset Rules</button>
-  <button (click)="printRules()">Print Rules</button>
+  <button (click)="resetBoard()">Reset Board</button>
+  <button (click)="startGame()" *ngIf="!run">Start</button>
+  <button (click)="stopGame()" *ngIf="run">Stop</button>
 </div>
 
-<div>
-  <button (click)="resetBoard()">reset Board</button>
-  <button (click)="startGame()" *ngIf="!run">start</button>
-  <button (click)="stopGame()" *ngIf="run">stop</button>
-</div>
-
-<div>Current tick {{ tick }}</div>
+<div class="tick">Tick: {{ tick }}</div>
 <div class="table">
   <div *ngFor="let row of board" class="table-row">
     <span *ngFor="let cell of row" class="table-cell">

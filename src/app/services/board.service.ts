@@ -9,6 +9,10 @@ import { CellState } from '../models/cellState';
 })
 export class BoardService {
   boardSize = 15;
+
+  interval!: number;
+  tickRate: number = 800;
+
   private board = new BehaviorSubject<Cell[][]>([]);
   board$ = this.board.asObservable();
 
@@ -18,22 +22,16 @@ export class BoardService {
   private run = new BehaviorSubject<boolean>(false);
   run$ = this.run.asObservable();
 
-  interval!: number;
-  tickRate: number = 800;
-
   // Rules for next state based off #neighbours
-  rules = {
-    underpopulation_threshold: 2,
-    overpopulation_threshold: 3,
-    life_exact: [3],
-  };
-
-  getRules() {
-    return this.rules;
-  }
+  private rules = new BehaviorSubject<any>(this.getDefaultRules());
+  rules$ = this.rules.asObservable();
 
   initializeRules() {
     this.resetRules();
+  }
+
+  resetRules() {
+    this.rules.next(this.getDefaultRules());
   }
 
   getDefaultRules() {
@@ -44,21 +42,10 @@ export class BoardService {
       overpopulation_threshold: 3,
       // Exactly this => (Dead => Alive) [Default 3]
       // life_exact: [2, 3, 4],
-      life_exact: [3],
+      life_exact: 3,
+      life_range: [],
     };
     return rules;
-  }
-
-  resetRules() {
-    this.rules = this.getDefaultRules();
-  }
-
-  setUnderpopulationThreshold(n: number) {
-    this.rules.underpopulation_threshold = n;
-  }
-
-  setOverpopulationThreshold(n: number) {
-    this.rules.overpopulation_threshold = n;
   }
 
   toggleState(cell: Cell): void {
@@ -131,13 +118,13 @@ export class BoardService {
           nextBoard[i][j].prevState = 1;
 
           // Underpopulation
-          if (neighbours < this.rules.underpopulation_threshold) {
+          if (neighbours < this.rules.value.underpopulation_threshold) {
             nextBoard[i][j].state = 0;
             continue;
           }
 
           // Overpopulation
-          if (neighbours > this.rules.overpopulation_threshold) {
+          if (neighbours > this.rules.value.overpopulation_threshold) {
             nextBoard[i][j].state = 0;
             continue;
           }
@@ -148,7 +135,7 @@ export class BoardService {
 
         if (currentState == 0) {
           // Comes to life
-          if (this.rules.life_exact.includes(neighbours)) {
+          if (neighbours == this.rules.value.life_exact) {
             nextBoard[i][j].state = 1;
           }
         }

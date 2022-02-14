@@ -19,6 +19,7 @@ export class GameComponent implements OnInit {
 
   constructor(private boardService: BoardService) {
     this.boardService.initializeBoardState();
+    this.boardService.initializeRules();
     this.boardService.board$.subscribe((board: Cell[][]) => {
       this.board = board;
     });
@@ -28,7 +29,9 @@ export class GameComponent implements OnInit {
     this.boardService.run$.subscribe((run: boolean) => {
       this.run = run;
     });
-    this.rules = this.boardService.getRules();
+    this.boardService.rules$.subscribe((rules: any) => {
+      this.rules = rules;
+    });
   }
 
   toggleState(cell: Cell) {
@@ -51,9 +54,15 @@ export class GameComponent implements OnInit {
     this.boardService.resetRules();
   }
 
-  printRules() {
-    console.log(this.rules);
-  }
-
   ngOnInit(): void {}
+
+  ngOnChanges() {
+    console.log('changes');
+    let defaultRules = this.boardService.getDefaultRules();
+    if (this.rules.underpopulation_threshold == null) {
+      console.log(`null detected`);
+      this.rules.underpopulation_threshold =
+        defaultRules.underpopulation_threshold;
+    }
+  }
 }
