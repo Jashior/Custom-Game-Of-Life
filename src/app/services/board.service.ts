@@ -19,18 +19,47 @@ export class BoardService {
   run$ = this.run.asObservable();
 
   interval!: number;
-  tickRate: number = 600;
+  tickRate: number = 800;
 
   // Rules for next state based off #neighbours
   rules = {
-    // Lower than this => Dead [Default 2]
     underpopulation_threshold: 2,
-    // Greater than this => Dead [Default 3]
     overpopulation_threshold: 3,
-    // Exactly this => (Dead => Alive) [Default 3]
-    // life_exact: [2, 3, 4],
     life_exact: [3],
   };
+
+  getRules() {
+    return this.rules;
+  }
+
+  initializeRules() {
+    this.resetRules();
+  }
+
+  getDefaultRules() {
+    let rules = {
+      // Lower than this => Dead [Default 2]
+      underpopulation_threshold: 2,
+      // Greater than this => Dead [Default 3]
+      overpopulation_threshold: 3,
+      // Exactly this => (Dead => Alive) [Default 3]
+      // life_exact: [2, 3, 4],
+      life_exact: [3],
+    };
+    return rules;
+  }
+
+  resetRules() {
+    this.rules = this.getDefaultRules();
+  }
+
+  setUnderpopulationThreshold(n: number) {
+    this.rules.underpopulation_threshold = n;
+  }
+
+  setOverpopulationThreshold(n: number) {
+    this.rules.overpopulation_threshold = n;
+  }
 
   toggleState(cell: Cell): void {
     cell.prevState = cell.state;
@@ -155,4 +184,9 @@ export class BoardService {
   }
 
   constructor() {}
+
+  ngOnInit() {
+    this.initializeRules();
+    this.initializeBoardState();
+  }
 }

@@ -13,6 +13,7 @@ export class GameComponent implements OnInit {
   board: Cell[][] = [];
   tick: number = 0;
   run: boolean = false;
+  rules!: any;
 
   initializeBoarState() {}
 
@@ -27,6 +28,7 @@ export class GameComponent implements OnInit {
     this.boardService.run$.subscribe((run: boolean) => {
       this.run = run;
     });
+    this.rules = this.boardService.getRules();
   }
 
   toggleState(cell: Cell) {
@@ -43,6 +45,14 @@ export class GameComponent implements OnInit {
 
   resetBoard() {
     this.boardService.reset();
+  }
+
+  resetRules() {
+    this.boardService.resetRules();
+  }
+
+  printRules() {
+    console.log(this.rules);
   }
 
   ngOnInit(): void {}

@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
-    background-color: black;
-
+    // Color Variables
+    --color-background: rgb(26, 24, 24);
     --color-alive: rgb(78, 136, 78);
     --color-dead: rgb(114, 113, 113);
+
+    background-color: var(--color-background);
+
 }

@@ -2,6 +2,35 @@
   <h1>Controls</h1>
 </div>
 
+<div class="rules">
+  <h3>Ruleset</h3>
+  <ul>
+    <li>
+      Any live cell with fewer than
+      <input type="number" [value]="rules.underpopulation_threshold" />
+      live neighbours dies (Underpopulation)
+    </li>
+
+    <li>
+      Any live cell with more than <b>3</b> live neighbours dies
+      (Overpopulation)
+    </li>
+
+    <li>
+      Any live cell with between <b>2</b> and <b>3</b> live neighbours inclusive
+      lives on (Persists)
+    </li>
+
+    <li>
+      Any dead cell with <b>3</b> live neighbours becomes a live cell
+      (Reproduction)
+    </li>
+  </ul>
+
+  <button (click)="resetRules()">Reset Rules</button>
+  <button (click)="printRules()">Print Rules</button>
+</div>
+
 <div>
   <button (click)="resetBoard()">reset Board</button>
   <button (click)="startGame()" *ngIf="!run">start</button>
