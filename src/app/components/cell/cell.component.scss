@@ -1,33 +1,38 @@
 div {
     width: 20px;
     min-height: 20px;
-    background-color: rgb(114, 113, 113);
+    background-color: var(--color-dead);
     border: 1px solid rgb(27, 26, 26);
     border-radius: 0.2em;
 }
 
-.persist{
-    background-color: blue;
+.persistAlive{
+    background-color:var(--color-alive)
+}
+.peristDead{
+    background: var(--color-dead)
 }
 .alive{
-    animation: toAlive 0.3s linear 1 forwards;
+    animation: toAlive 0.2s linear 1 forwards;
 }
 
 .dead{
-    animation: toDead 0.3s linear 1 forwards;
+    animation: toDead 0.2s linear 1 forwards;
 }
 
 @keyframes toAlive {
     from {
+        background-color: var(--color-dead);
     }
     to {
-        background-color: rgb(78, 136, 78);
+        background-color: var(--color-alive);
     }
 }
 @keyframes toDead {
     from {
+        background-color: var(--color-alive);
     }
     to {
-        background-color: rgb(114, 113, 113);
+        background-color: var(--color-dead);
     }
 }

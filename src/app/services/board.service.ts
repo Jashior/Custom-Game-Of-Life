@@ -33,6 +33,7 @@ export class BoardService {
   };
 
   toggleState(cell: Cell): void {
+    cell.prevState = cell.state;
     if (cell.state == 0) {
       cell.state = 1;
     } else {
@@ -45,7 +46,7 @@ export class BoardService {
     for (let i = 0; i < this.boardSize; i++) {
       newBoard.push([]);
       for (let j = 0; j < this.boardSize; j++) {
-        let deadCell: Cell = { state: 0 };
+        let deadCell: Cell = { state: 0, prevState: 0 };
         newBoard[i].push(deadCell);
       }
     }
@@ -98,6 +99,8 @@ export class BoardService {
         let currentState = this.board.value[i][j].state;
 
         if (currentState == 1) {
+          nextBoard[i][j].prevState = 1;
+
           // Underpopulation
           if (neighbours < this.rules.underpopulation_threshold) {
             nextBoard[i][j].state = 0;

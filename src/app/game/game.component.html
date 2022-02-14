@@ -12,7 +12,7 @@
 <div class="table">
   <div *ngFor="let row of board" class="table-row">
     <span *ngFor="let cell of row" class="table-cell">
-      <app-cell [state]="cell.state" (click)="toggleState(cell)"> </app-cell>
+      <app-cell [cell]="cell" (click)="toggleState(cell)"> </app-cell>
     </span>
     <br />
   </div>

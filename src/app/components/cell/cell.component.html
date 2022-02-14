@@ -1,11 +1,9 @@
 <div
   class="cell"
   [ngClass]="{
-    dead: state.valueOf() == 0,
-    alive: state.valueOf() == 1
+    dead: cell.state == 0 && cell.prevState == 1,
+    persistDead: cell.state == 0 && cell.prevState == 0,
+    alive: cell.state == 1 && cell.prevState == 0,
+    persistAlive: cell.state == 1 && cell.prevState == 1
   }"
 ></div>
-<!-- alive: (state.valueOf() == 1 && oldState.valueOf() == 0), persist:
-(state.valueOf() == 1 && oldState.valueOf() == 1), -->
-<!-- && oldState.valueOf() == 0,
-    persist: state.valueOf() == 1 && oldState.valueOf() == 1 -->
