@@ -19,21 +19,19 @@ export class BoardService {
   run$ = this.run.asObservable();
 
   interval!: number;
+  tickRate: number = 600;
 
   // Rules for next state based off #neighbours
   rules = {
-    // Lower than this => die off
+    // Lower than this => Dead [Default 2]
     underpopulation_threshold: 2,
-    // Greater than this => die off
+    // Greater than this => Dead [Default 3]
     overpopulation_threshold: 3,
-    // Exactly this => (Dead => Alive)
+    // Exactly this => (Dead => Alive) [Default 3]
     // life_exact: [2, 3, 4],
-    life_exact: [2],
+    life_exact: [3],
   };
 
-  printBoard() {
-    console.log(this.board.value);
-  }
   toggleState(cell: Cell): void {
     if (cell.state == 0) {
       cell.state = 1;
@@ -145,7 +143,7 @@ export class BoardService {
     this.interval = window.setInterval(() => {
       this.tick.next(this.tick.value + 1);
       this.evolve();
-    }, 500);
+    }, this.tickRate);
   }
 
   stop() {

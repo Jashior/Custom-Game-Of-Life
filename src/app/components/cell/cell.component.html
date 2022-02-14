@@ -1,7 +1,11 @@
 <div
   class="cell"
   [ngClass]="{
-    alive: state.valueOf() == 1,
-    dead: state.valueOf() == 0
+    dead: state.valueOf() == 0,
+    alive: state.valueOf() == 1
   }"
 ></div>
+<!-- alive: (state.valueOf() == 1 && oldState.valueOf() == 0), persist:
+(state.valueOf() == 1 && oldState.valueOf() == 1), -->
+<!-- && oldState.valueOf() == 0,
+    persist: state.valueOf() == 1 && oldState.valueOf() == 1 -->

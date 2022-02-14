@@ -33,14 +33,6 @@ export class GameComponent implements OnInit {
     this.boardService.toggleState(cell);
   }
 
-  printBoard() {
-    this.boardService.printBoard();
-  }
-
-  nextBoard() {
-    this.boardService.evolve();
-  }
-
   startGame() {
     this.boardService.start();
   }

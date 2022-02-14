@@ -1,14 +1,33 @@
 div {
     width: 20px;
     min-height: 20px;
-    background-color: orange;
+    background-color: rgb(114, 113, 113);
     border: 1px solid rgb(27, 26, 26);
+    border-radius: 0.2em;
 }
 
+.persist{
+    background-color: blue;
+}
 .alive{
-    background-color: rgb(78, 136, 78);
+    animation: toAlive 0.3s linear 1 forwards;
 }
 
 .dead{
-    background-color: rgb(114, 113, 113);
+    animation: toDead 0.3s linear 1 forwards;
+}
+
+@keyframes toAlive {
+    from {
+    }
+    to {
+        background-color: rgb(78, 136, 78);
+    }
+}
+@keyframes toDead {
+    from {
+    }
+    to {
+        background-color: rgb(114, 113, 113);
+    }
 }
