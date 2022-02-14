@@ -1,0 +1,21 @@
+<div>
+  <h1>Controls</h1>
+</div>
+
+<div>
+  <button (click)="printBoard()">print board</button>
+  <button (click)="nextBoard()">next Board</button>
+  <button (click)="resetBoard()">reset Board</button>
+  <button (click)="startGame()" *ngIf="!run">start</button>
+  <button (click)="stopGame()" *ngIf="run">stop</button>
+</div>
+
+<div>Current tick {{ tick }}</div>
+<div class="table">
+  <div *ngFor="let row of board" class="table-row">
+    <span *ngFor="let cell of row" class="table-cell">
+      <app-cell [state]="cell.state" (click)="toggleState(cell)"> </app-cell>
+    </span>
+    <br />
+  </div>
+</div>
