@@ -6,7 +6,7 @@ This app allows you to adjust the ruleset
 
 # Demo
 
-https://customgol.herokuapp.com
+https://custom-gol.netlify.app/
 
 
 ![Custom Game Of Life Demo][demo]
